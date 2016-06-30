@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,15 +47,7 @@ public class AddContactFragment extends Fragment {
         btnSaveAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String buyerName = etBuyerNameAddContact.getText().toString();
-                String phone = etPhoneAddContact.getText().toString();
-                String city = etCityAddContact.getText().toString();
-
-                addContact(buyerName, phone, city);
-
-                etBuyerNameAddContact.setText("");
-                etPhoneAddContact.setText("");
-                etCityAddContact.setText("");
+                submitForm();
             }
         });
 
@@ -76,7 +69,6 @@ public class AddContactFragment extends Fragment {
         mRealm.close();
 
 
-
         Toast.makeText(getActivity(), "Contact Saved.", Toast.LENGTH_SHORT).show();
         RealmResults<AddContact> results = mRealm.where(AddContact.class).findAll();
         for (AddContact s : results) {
@@ -86,5 +78,69 @@ public class AddContactFragment extends Fragment {
             s.getCity();
             Log.e("MainActivity", "Get Data: " + s);
         }
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private boolean validateBuyerName() {
+        if (etBuyerNameAddContact.getText().toString().trim().isEmpty()) {
+            etBuyerNameAddContact.setError(getString(R.string.err_msg_buyer_name));
+            requestFocus(etBuyerNameAddContact);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateNumber() {
+        if (etPhoneAddContact.getText().toString().trim().isEmpty()) {
+            etPhoneAddContact.setError(getString(R.string.err_msg_phone_name));
+            requestFocus(etPhoneAddContact);
+            return false;
+        }
+        if (etPhoneAddContact.length() != 10) {
+            etPhoneAddContact.setError(getString(R.string.err_msg_phone));
+            requestFocus(etPhoneAddContact);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateCity() {
+        if (etCityAddContact.getText().toString().trim().isEmpty()) {
+            etCityAddContact.setError(getString(R.string.err_msg_city));
+            requestFocus(etCityAddContact);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void submitForm() {
+        if (!validateBuyerName()) {
+            return;
+        }
+        if (!validateNumber()) {
+            return;
+        }
+        if (!validateCity()) {
+            return;
+        }
+
+        String buyerName = etBuyerNameAddContact.getText().toString();
+        String phone = etPhoneAddContact.getText().toString();
+        String city = etCityAddContact.getText().toString();
+
+
+        addContact(buyerName, phone, city);
+
+        etBuyerNameAddContact.setText("");
+        etPhoneAddContact.setText("");
+        etCityAddContact.setText("");
     }
 }

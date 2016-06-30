@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:orientation="vertical">
+<in.vaksys.takeorder.extras.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/percentEnterCarDetails11"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/dialog_shape"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:visibility="visible">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_widthPercent="90%">
 
         <LinearLayout
-            android:id="@+id/linear_person_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -30,7 +35,7 @@
 
 
             <EditText
-                android:id="@+id/et_buyerName_addContact"
+                android:id="@+id/et_buyerName_addContact_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -61,7 +66,7 @@
 
 
             <EditText
-                android:id="@+id/et_phone_addContact"
+                android:id="@+id/et_phone_addContact_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -94,7 +99,7 @@
 
 
             <EditText
-                android:id="@+id/et_city_addContact"
+                android:id="@+id/et_city_addContact_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -109,7 +114,7 @@
 
 
         <Button
-            android:id="@+id/btn_save_addContact"
+            android:id="@+id/btn_save_addContact_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -119,6 +124,8 @@
             android:text="save"
             android:textAllCaps="true"
             android:textColor="#FFFFFF" />
+
+
     </LinearLayout>
 
-</LinearLayout>
+</in.vaksys.takeorder.extras.PercentLinearLayout>

@@ -10,4 +10,13 @@
     <string name="add_order">Add Order</string>
     <string name="summary">Summary of Orders </string>
     <string name="check">Check List</string>
+    <string name="err_msg_buyer_name">Enter Buyer Name</string>
+    <string name="err_msg_phone_name">Enter Phone</string>
+    <string name="err_msg_phone">Enter 10 digit only</string>
+    <string name="err_msg_city">Enter City</string>
+
+    <string name="err_msg_barcoede">Enter Name</string>
+    <string name="err_msg_quantity">Enter Quantity</string>
+    <string name="err_msg_price">Enter Price</string>
+    <string name="err_msg_description">Enter Description</string>
 </resources>

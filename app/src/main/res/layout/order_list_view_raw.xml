@@ -33,6 +33,12 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/orderIdHidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_barcodeName_orderList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,6 +86,7 @@
             android:textColor="#3C3C3C" />
 
         <ImageView
+            android:id="@+id/edit_order"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -87,6 +94,7 @@
             android:src="@drawable/ic_action_edit" />
 
         <ImageView
+            android:id="@+id/delete_order"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

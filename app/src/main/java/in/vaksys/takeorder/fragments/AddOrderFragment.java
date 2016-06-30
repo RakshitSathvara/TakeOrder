@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -64,25 +65,7 @@ public class AddOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String sp = spCusName.getSelectedItem().toString();
-
-                String name = etNameAddOrder.getText().toString();
-                String quantity = etQuantityAddOrder.getText().toString();
-                String price = etPriceAddOrder.getText().toString();
-                String description = etDescriptionAddOrder.getText().toString();
-
-                Calendar c = Calendar.getInstance();
-                System.out.println("Current time => " + c.getTime());
-
-                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                String formattedDate = df.format(c.getTime());
-
-                addOrder(sp, name, quantity, price, description, formattedDate);
-
-                etNameAddOrder.setText("");
-                etQuantityAddOrder.setText("");
-                etPriceAddOrder.setText("");
-                etDescriptionAddOrder.setText("");
+                submitForm();
             }
         });
 
@@ -119,5 +102,87 @@ public class AddOrderFragment extends Fragment {
             s.getDescription();
             Log.e("MainActivity", "Get Data: " + s);
         }
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private boolean validateBarcodeName() {
+        if (etNameAddOrder.getText().toString().trim().isEmpty()) {
+            etNameAddOrder.setError(getString(R.string.err_msg_barcoede));
+            requestFocus(etNameAddOrder);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateQuatity() {
+        if (etQuantityAddOrder.getText().toString().trim().isEmpty()) {
+            etQuantityAddOrder.setError(getString(R.string.err_msg_quantity));
+            requestFocus(etQuantityAddOrder);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validatePrice() {
+        if (etPriceAddOrder.getText().toString().trim().isEmpty()) {
+            etPriceAddOrder.setError(getString(R.string.err_msg_price));
+            requestFocus(etPriceAddOrder);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateDescription() {
+        if (etDescriptionAddOrder.getText().toString().trim().isEmpty()) {
+            etDescriptionAddOrder.setError(getString(R.string.err_msg_description));
+            requestFocus(etDescriptionAddOrder);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void submitForm() {
+        if (!validateBarcodeName()) {
+            return;
+        }
+        if (!validateQuatity()) {
+            return;
+        }
+        if (!validatePrice()) {
+            return;
+        }
+        if (!validateDescription()) {
+            return;
+        }
+
+        String sp = spCusName.getSelectedItem().toString();
+
+        String name = etNameAddOrder.getText().toString();
+        String quantity = etQuantityAddOrder.getText().toString();
+        String price = etPriceAddOrder.getText().toString();
+        String description = etDescriptionAddOrder.getText().toString();
+
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        addOrder(sp, name, quantity, price, description, formattedDate);
+
+        etNameAddOrder.setText("");
+        etQuantityAddOrder.setText("");
+        etPriceAddOrder.setText("");
+        etDescriptionAddOrder.setText("");
+
     }
 }

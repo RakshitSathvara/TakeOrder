@@ -24,6 +24,12 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/contactIdHidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_buyerName_contactList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,6 +63,7 @@
             android:textSize="12sp" />
 
         <ImageView
+            android:id="@+id/edit_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -64,6 +71,7 @@
             android:src="@drawable/ic_action_edit" />
 
         <ImageView
+            android:id="@+id/delete_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

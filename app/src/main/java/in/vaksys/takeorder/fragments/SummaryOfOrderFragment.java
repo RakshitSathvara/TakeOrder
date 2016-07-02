@@ -19,6 +19,14 @@ public class SummaryOfOrderFragment extends Fragment {
     private LinearLayout ll1;
     private View clickSummaryGenerate;
 
+    public static SummaryOfOrderFragment newInstance(int index) {
+        SummaryOfOrderFragment fragment = new SummaryOfOrderFragment();
+        Bundle b = new Bundle();
+        b.putInt("index", index);
+        fragment.setArguments(b);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

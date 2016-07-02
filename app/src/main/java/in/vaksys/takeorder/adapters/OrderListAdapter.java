@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -36,11 +38,20 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     private Realm mRealm;
     private AddOrder addOrder;
     private RealmResults<AddContact> results;
+    private EditText barcode;
+    private EditText quantity;
+    private EditText price;
+    private EditText description;
+    private Dialog dialog;
+    private String sp, barcode1, quantity1, price1, description1;
+    private String id;
+    private Spinner spinner;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView orderId, barcodeName, quantity, price, description, orderIdHidden;
         private CheckBox checkBox;
         private ImageView edit, delete;
+        private LinearLayout linearOrder;
 
         public MyViewHolder(View view) {
             super(view);
@@ -56,6 +67,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             delete = (ImageView) view.findViewById(R.id.delete_order);
 
             orderIdHidden = (TextView) view.findViewById(R.id.orderIdHidden);
+            linearOrder = (LinearLayout) view.findViewById(R.id.linearOrder);
         }
     }
 
@@ -90,19 +102,19 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(mContext);
+                dialog = new Dialog(mContext);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.add_contact_edit);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                final String id = holder.orderIdHidden.getText().toString();
+                id = holder.orderIdHidden.getText().toString();
                 Log.e("iddddd", id);
 
                 final Spinner spinner = (Spinner) dialog.findViewById(R.id.sp_cus_name_edit);
-                final EditText barcode = (EditText) dialog.findViewById(R.id.et_name_addOrder_edit);
-                final EditText quantity = (EditText) dialog.findViewById(R.id.et_quantity_addOrder_edit);
-                final EditText price = (EditText) dialog.findViewById(R.id.et_price_addOrder_edit);
-                final EditText description = (EditText) dialog.findViewById(R.id.et_description_addOrder_edit);
+                barcode = (EditText) dialog.findViewById(R.id.et_name_addOrder_edit);
+                quantity = (EditText) dialog.findViewById(R.id.et_quantity_addOrder_edit);
+                price = (EditText) dialog.findViewById(R.id.et_price_addOrder_edit);
+                description = (EditText) dialog.findViewById(R.id.et_description_addOrder_edit);
 
                 mRealm = Realm.getDefaultInstance();
 
@@ -121,8 +133,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                     @Override
                     public void onClick(View view) {
 
-                        String sp, barcode1, quantity1, price1, description1;
-
                         sp = spinner.getSelectedItem().toString();
                         barcode1 = barcode.getText().toString();
                         quantity1 = quantity.getText().toString();
@@ -131,6 +141,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
                         updatedatabase(id, sp, barcode1, quantity1, price1, description1);
                         dialog.dismiss();
+
+
                     }
                 });
 
@@ -167,8 +179,34 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             }
         });
 
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+
     }
-    
+
+    private void saveData() {
+
+//        if (!validateBarcodeName()) {
+//            return;
+//        }
+//        if (!validateQuatity()) {
+//            return;
+//        }
+//        if (!validatePrice()) {
+//
+//        }
+//        if (!validateDescription()) {
+//
+//        }
+
+
+
+    }
+
 
     @Override
     public int getItemCount() {
@@ -210,5 +248,45 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
         mRealm.commitTransaction();
     }
+
+//    private boolean validateBarcodeName() {
+//        if (etNameAddOrder.getText().toString().trim().isEmpty()) {
+//            etNameAddOrder.setError(getString(R.string.err_msg_barcoede));
+//            requestFocus(etNameAddOrder);
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    private boolean validateQuatity() {
+//        if (etQuantityAddOrder.getText().toString().trim().isEmpty()) {
+//            etQuantityAddOrder.setError(getString(R.string.err_msg_quantity));
+//            requestFocus(etQuantityAddOrder);
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    private boolean validatePrice() {
+//        if (etPriceAddOrder.getText().toString().trim().isEmpty()) {
+//            etPriceAddOrder.setText("-");
+//            requestFocus(etPriceAddOrder);
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    private boolean validateDescription() {
+//        if (etDescriptionAddOrder.getText().toString().trim().isEmpty()) {
+//            etDescriptionAddOrder.setText("-");
+//            requestFocus(etDescriptionAddOrder);
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
 }
 

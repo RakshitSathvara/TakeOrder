@@ -36,6 +36,14 @@ public class AddContactFragment extends Fragment {
 
     private Realm mRealm;
 
+    public static AddContactFragment newInstance(int index) {
+        AddContactFragment fragment = new AddContactFragment();
+        Bundle b = new Bundle();
+        b.putInt("index", index);
+        fragment.setArguments(b);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,11 +110,12 @@ public class AddContactFragment extends Fragment {
             requestFocus(etPhoneAddContact);
             return false;
         }
-        if (etPhoneAddContact.length() != 10) {
-            etPhoneAddContact.setError(getString(R.string.err_msg_phone));
-            requestFocus(etPhoneAddContact);
-            return false;
-        } else {
+//        if (etPhoneAddContact.length() != 10) {
+//            etPhoneAddContact.setError(getString(R.string.err_msg_phone));
+//            requestFocus(etPhoneAddContact);
+//            return false;
+//        }
+        else {
             return true;
         }
     }

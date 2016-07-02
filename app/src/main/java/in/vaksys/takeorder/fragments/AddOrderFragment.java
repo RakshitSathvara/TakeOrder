@@ -7,10 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +26,8 @@ import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.adapters.SpinnerTextAdapter;
 import in.vaksys.takeorder.dbPojo.AddContact;
 import in.vaksys.takeorder.dbPojo.AddOrder;
+import in.vaksys.takeorder.model.Message;
+import in.vaksys.takeorder.model.MessageSec;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -42,9 +48,21 @@ public class AddOrderFragment extends Fragment {
     EditText etDescriptionAddOrder;
     @Bind(R.id.btn_save_addOrder)
     Button btnSaveAddOrder;
+    @Bind(R.id.btn_finish_addOrder)
+    Button btnFinishAddOrder;
 
     private Realm mRealm;
     private RealmResults<AddContact> results;
+    private String sp;
+    private String buyerIdName;
+
+    public static AddOrderFragment newInstance(int index) {
+        AddOrderFragment fragment = new AddOrderFragment();
+        Bundle b = new Bundle();
+        b.putInt("index", index);
+        fragment.setArguments(b);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +84,35 @@ public class AddOrderFragment extends Fragment {
             public void onClick(View view) {
 
                 submitForm();
+            }
+        });
+
+        spCusName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sp = spCusName.getSelectedItem().toString();
+                buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+                //Log.e("FINISH", "onClick: " + sp + buyerIdName);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        btnFinishAddOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                sp = spCusName.getSelectedItem().toString();
+//                buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+                Log.e("FINISH", "onClick: " + sp + buyerIdName);
+                EventBus.getDefault().post(new Message(buyerIdName));
+
+                MessageSec messageSec = new MessageSec(buyerIdName);
+
+                EventBus.getDefault().post(messageSec);
+
             }
         });
 
@@ -132,7 +179,7 @@ public class AddOrderFragment extends Fragment {
 
     private boolean validatePrice() {
         if (etPriceAddOrder.getText().toString().trim().isEmpty()) {
-            etPriceAddOrder.setError(getString(R.string.err_msg_price));
+            etPriceAddOrder.setText("-");
             requestFocus(etPriceAddOrder);
             return false;
         } else {
@@ -142,7 +189,7 @@ public class AddOrderFragment extends Fragment {
 
     private boolean validateDescription() {
         if (etDescriptionAddOrder.getText().toString().trim().isEmpty()) {
-            etDescriptionAddOrder.setError(getString(R.string.err_msg_description));
+            etDescriptionAddOrder.setText("-");
             requestFocus(etDescriptionAddOrder);
             return false;
         } else {
@@ -158,13 +205,13 @@ public class AddOrderFragment extends Fragment {
             return;
         }
         if (!validatePrice()) {
-            return;
+
         }
         if (!validateDescription()) {
-            return;
+
         }
 
-        String sp = spCusName.getSelectedItem().toString();
+        sp = spCusName.getSelectedItem().toString();
 
         String name = etNameAddOrder.getText().toString();
         String quantity = etQuantityAddOrder.getText().toString();
@@ -184,5 +231,11 @@ public class AddOrderFragment extends Fragment {
         etPriceAddOrder.setText("");
         etDescriptionAddOrder.setText("");
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

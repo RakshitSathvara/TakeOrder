@@ -70,7 +70,6 @@
                 android:digits="0123456789"
                 android:hint="Phone"
                 android:lines="1"
-                android:maxLength="10"
                 android:padding="8dp"
                 android:textSize="12sp" />
 

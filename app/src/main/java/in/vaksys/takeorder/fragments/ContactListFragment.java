@@ -30,6 +30,14 @@ public class ContactListFragment extends Fragment {
     private Realm mRealm;
     private RealmResults<AddContact> addContactsList;
 
+    public static ContactListFragment newInstance(int index) {
+        ContactListFragment fragment = new ContactListFragment();
+        Bundle b = new Bundle();
+        b.putInt("index", index);
+        fragment.setArguments(b);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

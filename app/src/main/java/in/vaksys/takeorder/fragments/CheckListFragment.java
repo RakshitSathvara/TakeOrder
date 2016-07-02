@@ -13,6 +13,15 @@ import in.vaksys.takeorder.R;
  */
 public class CheckListFragment extends Fragment {
 
+
+    public static CheckListFragment newInstance(int index) {
+        CheckListFragment fragment = new CheckListFragment();
+        Bundle b = new Bundle();
+        b.putInt("index", index);
+        fragment.setArguments(b);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

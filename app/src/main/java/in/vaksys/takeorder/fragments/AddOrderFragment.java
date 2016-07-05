@@ -106,6 +106,9 @@ public class AddOrderFragment extends Fragment {
             public void onClick(View view) {
 //                sp = spCusName.getSelectedItem().toString();
 //                buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+
+                submitForm();
+
                 Log.e("FINISH", "onClick: " + sp + buyerIdName);
                 EventBus.getDefault().post(new Message(buyerIdName));
 

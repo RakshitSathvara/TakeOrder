@@ -128,6 +128,18 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 spinner.setAdapter(spinnerTextAdapter);
 
                 Button btnSave = (Button) dialog.findViewById(R.id.btn_save_addOrder_edit);
+                Button btnFinish = (Button) dialog.findViewById(R.id.btn_finish_addOrder_edit);
+
+                AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+                String barcodeName = addOrder.getBarcode();
+                String quantityS = addOrder.getQuality();
+                String priceS = addOrder.getPrice();
+                String descriptionS = addOrder.getDescription();
+
+                barcode.setText(barcodeName);
+                quantity.setText(quantityS);
+                price.setText(priceS);
+                description.setText(descriptionS);
 
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -143,6 +155,20 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                         dialog.dismiss();
 
 
+                    }
+                });
+
+                btnFinish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sp = spinner.getSelectedItem().toString();
+                        barcode1 = barcode.getText().toString();
+                        quantity1 = quantity.getText().toString();
+                        price1 = price.getText().toString();
+                        description1 = description.getText().toString();
+
+                        updatedatabase(id, sp, barcode1, quantity1, price1, description1);
+                        dialog.dismiss();
                     }
                 });
 
@@ -202,7 +228,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 //        if (!validateDescription()) {
 //
 //        }
-
 
 
     }

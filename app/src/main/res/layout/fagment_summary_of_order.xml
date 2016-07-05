@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/et_startDate_registerCampaign"
+                android:id="@+id/et_startDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -46,14 +46,14 @@
 
 
             <EditText
-                android:id="@+id/et_endTime_registerCampaign"
+                android:id="@+id/et_endDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:background="@drawable/ractangle_border_small"
                 android:gravity="center"
-                android:hint="End Time"
+                android:hint="End Date"
                 android:textSize="12sp" />
 
             <ImageView

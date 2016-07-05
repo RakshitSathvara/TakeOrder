@@ -11,7 +11,10 @@ import android.view.View;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.UUID;
+
 import in.vaksys.takeorder.R;
+import in.vaksys.takeorder.dbPojo.AddContact;
 import in.vaksys.takeorder.fragments.AddContactFragment;
 import in.vaksys.takeorder.fragments.AddOrderFragment;
 import in.vaksys.takeorder.fragments.CheckListFragment;
@@ -20,6 +23,7 @@ import in.vaksys.takeorder.fragments.FragmentDrawer;
 import in.vaksys.takeorder.fragments.OrderListFragment;
 import in.vaksys.takeorder.fragments.SummaryOfOrderFragment;
 import in.vaksys.takeorder.model.Message;
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
 
@@ -34,12 +38,25 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private CheckListFragment checkListFragment;
     private String value = "";
 
+    private Realm mRealm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
+
+//        mRealm = Realm.getDefaultInstance();
+//
+//        mRealm.beginTransaction();
+//
+//        AddContact addContact = mRealm.createObject(AddContact.class);
+//
+//        addContact.setContactId(UUID.randomUUID().toString());
+//        addContact.setBuyerName("Select All");
+//        mRealm.commitTransaction();
+//        mRealm.close();
 
         mToolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(mToolbar);
@@ -58,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         summaryOfOrderFragment = SummaryOfOrderFragment.newInstance(4);
         checkListFragment = CheckListFragment.newInstance(5);
 
-        if (!value.equalsIgnoreCase("")) {
-            Log.e("dhfj", "dfkjd");
-
-        }
     }
 
     @Override
@@ -128,36 +141,42 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             fragmentManager.beginTransaction()
                     .replace(R.id.container_body, contactListFragment)
                     .commit();
+            mToolbar.setTitle("Contact List");
         }
 
         if (position == 1) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container_body, addContactFragment)
                     .commit();
+            mToolbar.setTitle("Add Contact");
         }
 
         if (position == 2) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container_body, orderListFragment)
                     .commit();
+            mToolbar.setTitle("Order List");
         }
 
         if (position == 3) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container_body, addOrderFragment)
                     .commit();
+            mToolbar.setTitle("Add Order");
         }
 
         if (position == 4) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container_body, summaryOfOrderFragment)
                     .commit();
+            mToolbar.setTitle("Summary Of Order");
         }
 
         if (position == 5) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container_body, checkListFragment)
                     .commit();
+            mToolbar.setTitle("Check List");
         }
 
 

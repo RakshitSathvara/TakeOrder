@@ -100,6 +100,17 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
                 Button btnSave = (Button) dialog.findViewById(R.id.btn_save_addContact_edit);
 
+
+                AddContact addContact = mRealm.where(AddContact.class).equalTo("contactId", id).findFirst();
+
+                String buyername = addContact.getBuyerName();
+                String phoneNumber = addContact.getPhone();
+                String cityName = addContact.getCity();
+
+                buyerName.setText(buyername);
+                phone.setText(phoneNumber);
+                city.setText(cityName);
+
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

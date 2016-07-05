@@ -6,14 +6,10 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,8 +18,6 @@ import in.vaksys.takeorder.adapters.OrderListAdapter;
 import in.vaksys.takeorder.adapters.SpinnerTextAdapter;
 import in.vaksys.takeorder.dbPojo.AddContact;
 import in.vaksys.takeorder.dbPojo.AddOrder;
-import in.vaksys.takeorder.model.Message;
-import in.vaksys.takeorder.model.MessageSec;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -58,10 +52,25 @@ public class OrderListFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
+        mRealm = Realm.getDefaultInstance();
+
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerview.setLayoutManager(manager);
 
-        mRealm = Realm.getDefaultInstance();
+        /*addOrderList = mRealm.where(AddOrder.class).findAll();
+        orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setItemAnimator(new DefaultItemAnimator());
+        recyclerview.setNestedScrollingEnabled(false);
+        recyclerview.setAdapter(orderListAdapter);
+
+        addOrderList.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
+            @Override
+            public void onChange(RealmResults<AddOrder> element) {
+                orderListAdapter.notifyDataSetChanged();
+            }
+        });*/
+
 
         RealmResults<AddContact> addOrders = mRealm.where(AddContact.class).findAll();
 
@@ -72,7 +81,7 @@ public class OrderListFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName","" ).findAll();
+                addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", adapterView.getSelectedItem().toString()).findAll();
                 orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
                 recyclerview.setHasFixedSize(true);
                 recyclerview.setItemAnimator(new DefaultItemAnimator());
@@ -94,23 +103,6 @@ public class OrderListFragment extends Fragment {
             }
         });
 
-//        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-//        recyclerview.setLayoutManager(manager);
-//
-//        addOrderList = mRealm.where(AddOrder.class).findAll();
-//        orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
-//        recyclerview.setHasFixedSize(true);
-//        recyclerview.setItemAnimator(new DefaultItemAnimator());
-//        recyclerview.setNestedScrollingEnabled(false);
-//        recyclerview.setAdapter(orderListAdapter);
-//
-//        addOrderList.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
-//            @Override
-//            public void onChange(RealmResults<AddOrder> element) {
-//                orderListAdapter.notifyDataSetChanged();
-//            }
-//        });
-
         return rootView;
     }
 
@@ -127,11 +119,11 @@ public class OrderListFragment extends Fragment {
 //        super.onDestroy();
 //
 //    }
-
-    @Subscribe
-    public void onEventBackgroundThread(MessageSec messageCar) {
-        Log.e("Sp datata", messageCar.getMsg());
-    }
+//
+//    @Subscribe
+//    public void onEventBackgroundThread(MessageSec messageCar) {
+//        Log.e("Sp datata", messageCar.getMsg());
+//    }
 
 //    @Override
 //    public void onResume() {
@@ -147,15 +139,15 @@ public class OrderListFragment extends Fragment {
 //
 //    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        EventBus.getDefault().unregister(this);
+//        super.onStop();
+//    }
 }

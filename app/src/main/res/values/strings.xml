@@ -19,4 +19,8 @@
     <string name="err_msg_quantity">Enter Quantity</string>
     <string name="err_msg_price">Enter Price</string>
     <string name="err_msg_description">Enter Description</string>
+
+    <string name="err_msg_startdate">Select StartDate</string>
+    <string name="err_msg_enddate">Select EndDate</string>
+
 </resources>

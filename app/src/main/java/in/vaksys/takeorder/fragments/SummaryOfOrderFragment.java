@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -98,6 +99,12 @@ public class SummaryOfOrderFragment extends Fragment {
         btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!validateStartDate()) {
+                    return;
+                }
+                if (!validateEndDate()) {
+                    return;
+                }
                 clickSummaryGenerate.setVisibility(View.VISIBLE);
                 ll1.setVisibility(View.GONE);
 
@@ -172,5 +179,31 @@ public class SummaryOfOrderFragment extends Fragment {
         fromDatePickerDialog.getDatePicker().setMaxDate(d.getTime());
 
         fromDatePickerDialog.show();
+    }
+
+    private boolean validateStartDate() {
+        if (startDate.getText().toString().trim().isEmpty()) {
+            startDate.setError(getString(R.string.err_msg_startdate));
+            requestFocus(startDate);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateEndDate() {
+        if (endDate.getText().toString().trim().isEmpty()) {
+            endDate.setError(getString(R.string.err_msg_enddate));
+            requestFocus(endDate);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 }

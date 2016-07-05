@@ -205,13 +205,20 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             }
         });
 
+        final int pos = position;
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    holder.linearOrder.setBackgroundColor(Color.GRAY);
+                    holder.linearOrder.setClickable(false);
+                } else {
+                    holder.linearOrder.setBackgroundColor(Color.WHITE);
+                    //holder.linearOrder.setClickable(false);
+                }
 
             }
         });
-
     }
 
     private void saveData() {

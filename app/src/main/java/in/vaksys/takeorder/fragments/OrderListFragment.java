@@ -57,21 +57,6 @@ public class OrderListFragment extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerview.setLayoutManager(manager);
 
-        /*addOrderList = mRealm.where(AddOrder.class).findAll();
-        orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
-        recyclerview.setHasFixedSize(true);
-        recyclerview.setItemAnimator(new DefaultItemAnimator());
-        recyclerview.setNestedScrollingEnabled(false);
-        recyclerview.setAdapter(orderListAdapter);
-
-        addOrderList.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
-            @Override
-            public void onChange(RealmResults<AddOrder> element) {
-                orderListAdapter.notifyDataSetChanged();
-            }
-        });*/
-
-
         RealmResults<AddContact> addOrders = mRealm.where(AddContact.class).findAll();
 
         final SpinnerTextAdapter sp = new SpinnerTextAdapter(getActivity(), addOrders);
@@ -105,49 +90,4 @@ public class OrderListFragment extends Fragment {
 
         return rootView;
     }
-
-//    @Override
-//    public void onDestroyView() {
-//
-//        super.onDestroyView();
-//        ButterKnife.unbind(this);
-//    }
-////
-//    @Override
-//    public void onDestroy() {
-//        EventBus.getDefault().unregister(this);
-//        super.onDestroy();
-//
-//    }
-//
-//    @Subscribe
-//    public void onEventBackgroundThread(MessageSec messageCar) {
-//        Log.e("Sp datata", messageCar.getMsg());
-//    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        EventBus.getDefault().unregister(this);
-//
-//        super.onPause();
-//
-//    }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        EventBus.getDefault().unregister(this);
-//        super.onStop();
-//    }
 }

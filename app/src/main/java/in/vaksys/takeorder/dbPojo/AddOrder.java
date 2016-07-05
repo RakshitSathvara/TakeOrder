@@ -1,5 +1,7 @@
 package in.vaksys.takeorder.dbPojo;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 
 /**
@@ -12,7 +14,7 @@ public class AddOrder extends RealmObject {
     private String quality;
     private String price;
     private String description;
-    private String startDate;
+    private Date startDate;
     private String buyerName;
 
     public String getBuyerName() {
@@ -63,11 +65,11 @@ public class AddOrder extends RealmObject {
         this.description = description;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 }

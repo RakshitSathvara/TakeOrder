@@ -5,46 +5,124 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linear_donor_list"
+        android:id="@+id/linearOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:weightSum="6">
 
         <TextView
-            android:id="@+id/tv_donorName_donorList"
+            android:id="@+id/tv_summaryId_summaryList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:lines="1"
             android:text="1"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_dateDonor_donorList"
+            android:id="@+id/summaryIdHidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_buyerName_summaryList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1.3"
             android:gravity="left"
-            android:text="abc"
+            android:lines="1"
+            android:text="coo1"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_ammount_donorList"
+            android:id="@+id/tv_barcodeName_summaryList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="420"
+            android:layout_gravity="center"
+            android:layout_weight="1.3"
+            android:gravity="left"
+            android:lines="1"
+            android:text="coo1"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
 
+        <TextView
+            android:id="@+id/tv_quantity_summaryList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:lines="1"
+            android:text="321"
+            android:textColor="#3C3C3C"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_price_summaryList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:lines="1"
+            android:text="90"
+            android:textColor="#3C3C3C"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_description_summaryList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.3"
+            android:gravity="center"
+            android:lines="1"
+            android:text="abc"
+            android:textColor="#3C3C3C" />
+
+        <!--<TextView
+            android:id="@+id/tv_date_summaryList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lines="1"
+            android:text="abc"
+            android:textColor="#3C3C3C" />-->
+
+        <!-- <ImageView
+             android:id="@+id/edit_order"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="right"
+
+             android:src="@drawable/ic_action_edit" />
+
+         <ImageView
+             android:id="@+id/delete_order"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="right"
+             android:src="@drawable/ic_action_delete" />
+ -->
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#CCC" />
+
+
 </LinearLayout>

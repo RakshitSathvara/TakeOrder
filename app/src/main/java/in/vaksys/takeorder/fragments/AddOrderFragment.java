@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 import butterknife.Bind;
@@ -55,6 +57,9 @@ public class AddOrderFragment extends Fragment {
     private RealmResults<AddContact> results;
     private String sp;
     private String buyerIdName;
+
+    private SimpleDateFormat sdf, dateFormatter;
+    Date d = null;
 
     public static AddOrderFragment newInstance(int index) {
         AddOrderFragment fragment = new AddOrderFragment();
@@ -122,7 +127,7 @@ public class AddOrderFragment extends Fragment {
         return rootView;
     }
 
-    private void addOrder(String sp, String name, String quantity, String price, String description, String startDate) {
+    private void addOrder(String buyerIDName, String sp, String name, String quantity, String price, String description, Date startDate) {
 
         mRealm = Realm.getDefaultInstance();
         mRealm.beginTransaction();
@@ -130,7 +135,7 @@ public class AddOrderFragment extends Fragment {
         AddOrder addOrder = mRealm.createObject(AddOrder.class);
 
         addOrder.setOrderId(UUID.randomUUID().toString());
-        addOrder.setBuyerName(sp);
+        addOrder.setBuyerName(buyerIDName);
         addOrder.setBarcode(name);
         addOrder.setQuality(quantity);
         addOrder.setPrice(price);
@@ -221,13 +226,39 @@ public class AddOrderFragment extends Fragment {
         String price = etPriceAddOrder.getText().toString();
         String description = etDescriptionAddOrder.getText().toString();
 
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
+        // sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c.getTime());
+//        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+//
+//        final Calendar newCalendar = Calendar.getInstance();
+//
+//        newCalendar.add(Calendar.DAY_OF_MONTH, 0);  // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE
+//        String formattedDate = sdf.format(newCalendar.getTime());
+//        try {
+//            d = sdf.parse(formattedDate);
+//            Log.e("DATE", "submitForm: " + d);
+//        } catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        }
 
-        addOrder(sp, name, quantity, price, description, formattedDate);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        //get current date time with Date()
+        Date date = new Date();
+        String a = dateFormat.format(date);
+        try {
+            date = dateFormat.parse(a);
+            Log.e("CCCCCCCCCC", "submitForm: " + date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println("DATE IS " + dateFormat.format(date));
+
+        //get current date time with Calendar()
+        Calendar cal = Calendar.getInstance();
+        System.out.println("DATE IS 1" + dateFormat.format(cal.getTime()));
+        Log.e("ADDORDER", "submitForm: " + dateFormat.format(cal.getTime()));
+
+        addOrder(sp, buyerIdName, name, quantity, price, description, date);
 
         etNameAddOrder.setText("");
         etQuantityAddOrder.setText("");

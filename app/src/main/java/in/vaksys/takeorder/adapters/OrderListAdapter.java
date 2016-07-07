@@ -88,7 +88,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         addOrder = addOrderRealmResults.get(position);
 
         //  AddContact results = mRealm.where(AddContact.class).findFirst();
@@ -205,16 +205,42 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             }
         });
 
-        final int pos = position;
+        id = holder.orderIdHidden.getText().toString();
+        Log.e("iddddd", id);
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    holder.linearOrder.setBackgroundColor(Color.GRAY);
-                    holder.linearOrder.setClickable(false);
+
+                    mRealm.beginTransaction();
+
+                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+
+                    holder.linearOrder.setBackgroundResource(R.color.colorBackground);
+                    holder.linearOrder.setEnabled(false);
+                    holder.edit.setEnabled(false);
+                    holder.delete.setEnabled(false);
+
+                    addOrder.setFlag(true);
+
+                    mRealm.commitTransaction();
+                    mRealm.close();
+                    //AddOrder addOrder1 = mRealm.where(AddOrder.class).equalTo("orderId",pos).findFirst();
+
                 } else {
+
+                    mRealm.beginTransaction();
+
+                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+
                     holder.linearOrder.setBackgroundColor(Color.WHITE);
+                    holder.edit.setEnabled(true);
+                    holder.delete.setEnabled(true);
                     //holder.linearOrder.setClickable(false);
+                    addOrder.setFlag(false);
+
+                    mRealm.commitTransaction();
+                    mRealm.close();
                 }
 
             }

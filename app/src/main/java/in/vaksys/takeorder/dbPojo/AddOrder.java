@@ -16,6 +16,15 @@ public class AddOrder extends RealmObject {
     private String description;
     private Date startDate;
     private String buyerName;
+    private boolean flag = false;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     public String getBuyerName() {
         return buyerName;

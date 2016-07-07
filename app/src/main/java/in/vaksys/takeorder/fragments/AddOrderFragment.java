@@ -97,7 +97,7 @@ public class AddOrderFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 sp = spCusName.getSelectedItem().toString();
                 buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
-                //Log.e("FINISH", "onClick: " + sp + buyerIdName);
+                Log.e("FINISH", "onClick: " + buyerIdName);
             }
 
             @Override
@@ -127,7 +127,7 @@ public class AddOrderFragment extends Fragment {
         return rootView;
     }
 
-    private void addOrder(String buyerIDName, String sp, String name, String quantity, String price, String description, Date startDate) {
+    private void addOrder(String sp, String buyerIDName, String name, String quantity, String price, String description, Date startDate) {
 
         mRealm = Realm.getDefaultInstance();
         mRealm.beginTransaction();
@@ -135,6 +135,7 @@ public class AddOrderFragment extends Fragment {
         AddOrder addOrder = mRealm.createObject(AddOrder.class);
 
         addOrder.setOrderId(UUID.randomUUID().toString());
+        Log.e("AddOrder", "addOrder: " + buyerIDName);
         addOrder.setBuyerName(buyerIDName);
         addOrder.setBarcode(name);
         addOrder.setQuality(quantity);

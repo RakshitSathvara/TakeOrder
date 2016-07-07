@@ -5,78 +5,104 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linear_donor_list"
+        android:id="@+id/linearCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:weightSum="8">
+        android:weightSum="9">
+
+        <!--<CheckBox
+            android:id="@+id/checkboxOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="5dp" />-->
 
         <TextView
-            android:id="@+id/tv_contactId_contactList"
+            android:id="@+id/tv_orderId_checkList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.5"
-            android:gravity="left"
+            android:gravity="center"
+            android:lines="1"
             android:text="1"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/contactIdHidden"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_buyerName_contactList"
+            android:id="@+id/orderIdHidden_checkList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1.5"
             android:gravity="center"
-            android:text="Raj"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_barcodeName_checkList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:lines="1"
+            android:text="coo1"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_phone_contactList"
+            android:id="@+id/tv_quantity_checkList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:gravity="center"
-            android:text="9974912368"
+            android:lines="1"
+            android:text="321"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_city_contactList"
+            android:id="@+id/tv_price_checkList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="Ahmadabad"
+            android:lines="1"
+            android:text="-"
             android:textColor="#3C3C3C"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_description_checkList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:lines="1"
+            android:text="-"
+            android:textColor="#3C3C3C" />
 
         <ImageView
-            android:id="@+id/edit_contact"
+            android:id="@+id/edit_order_checkList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="center"
             android:src="@drawable/ic_action_edit" />
 
-        <ImageView
-            android:id="@+id/delete_contact"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:src="@drawable/ic_action_delete" />
+        <!-- <ImageView
+             android:id="@+id/delete_order"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="right"
+             android:src="@drawable/ic_action_delete" />-->
 
     </LinearLayout>
 
@@ -84,4 +110,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#CCC" />
+
+
 </LinearLayout>

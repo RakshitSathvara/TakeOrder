@@ -4,15 +4,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
@@ -35,6 +37,8 @@ import butterknife.ButterKnife;
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.activities.UploadFile;
 import in.vaksys.takeorder.adapters.OrderListAdapter;
+import in.vaksys.takeorder.adapters.SpinnerTextAdapter;
+import in.vaksys.takeorder.dbPojo.AddContact;
 import in.vaksys.takeorder.dbPojo.AddOrder;
 import in.vaksys.takeorder.extras.Constants;
 import in.vaksys.takeorder.extras.Utils;
@@ -47,13 +51,14 @@ import io.realm.RealmResults;
  */
 public class OrderListFragment extends Fragment implements View.OnClickListener {
 
-    private CheckBox checkBox;
-    private LinearLayout linearLayout;
 
     @Bind(R.id.orderRecyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.sp_customer)
+    AppCompatSpinner spCustomer;
     @Bind(R.id.btn_generate_csvtodropbox_orderlist)
     Button btn_generate_csvtodropbox_orderlist;
+
     private OrderListAdapter orderListAdapter;
     private Realm mRealm;
     private RealmResults<AddOrder> addOrderList;
@@ -81,36 +86,52 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_order_list, container, false);
-        linearLayout = (LinearLayout) rootView.findViewById(R.id.linearOrder);
 
         ButterKnife.bind(this, rootView);
+
+        mRealm = Realm.getDefaultInstance();
 
         AndroidAuthSession session = buildSession();
         mApi = new DropboxAPI<AndroidAuthSession>(session);
 
 
-        mRealm = Realm.getDefaultInstance();
-
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerview.setLayoutManager(manager);
 
-        addOrderList = mRealm.where(AddOrder.class).findAll();
-        orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
-        recyclerview.setHasFixedSize(true);
-        recyclerview.setItemAnimator(new DefaultItemAnimator());
-        recyclerview.setNestedScrollingEnabled(false);
-        recyclerview.setAdapter(orderListAdapter);
+        RealmResults<AddContact> addOrders = mRealm.where(AddContact.class).findAll();
+
+        final SpinnerTextAdapter sp = new SpinnerTextAdapter(getActivity(), addOrders);
+        spCustomer.setAdapter(sp);
+
         btn_generate_csvtodropbox_orderlist.setOnClickListener(this);
 
-
-        addOrderList.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
+        spCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onChange(RealmResults<AddOrder> element) {
-                orderListAdapter.notifyDataSetChanged();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+                Log.e("RESULT", "onItemSelected: " + buyerIdName);
+                addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", buyerIdName).findAll();
+                Log.e("RESULT", "onItemSelected: " + addOrderList.size());
+                orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
+                recyclerview.setHasFixedSize(true);
+                recyclerview.setItemAnimator(new DefaultItemAnimator());
+                recyclerview.setNestedScrollingEnabled(false);
+                recyclerview.setAdapter(orderListAdapter);
+
+                addOrderList.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
+                    @Override
+                    public void onChange(RealmResults<AddOrder> element) {
+                        orderListAdapter.notifyDataSetChanged();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
-        //checkBox = (CheckBox) rootView.findViewById(R.id.checkboxOrder);
-
 
         return rootView;
     }

@@ -11,15 +11,14 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:padding="12dp"
-        android:weightSum="24.5">
+        android:padding="12dp">
 
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="right"
+            android:layout_weight="0.5"
+            android:gravity="center"
             android:text="No."
             android:textColor="#FFFFFF"
             android:textSize="12sp"
@@ -28,7 +27,17 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4.5"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="Buyer Name"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Barcode"
             android:textColor="#FFFFFF"
@@ -38,7 +47,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Quantity"
             android:textColor="#FFFFFF"
@@ -48,7 +57,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="price"
             android:textColor="#FFFFFF"
@@ -58,7 +67,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="5.5"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="Description"
             android:textColor="#FFFFFF"
@@ -68,14 +77,14 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Edit"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <TextView
+        <!--<TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -83,11 +92,17 @@
             android:text="Delete"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
 
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerCheckList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -105,7 +120,7 @@
             layout="@layout/check_list" />
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
     <!-- <Button

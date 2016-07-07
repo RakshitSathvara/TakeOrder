@@ -158,6 +158,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     private void DeleteVehicle(String contactId) {

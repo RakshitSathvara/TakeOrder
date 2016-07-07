@@ -26,18 +26,18 @@ public class Constants {
 //	public static final int ADD_FOLDER = 1;
 //	public static final int TAKE_PHOTO = 2;
 //	public static final int CHOOSE_FROM_GALLERY = 3;
-	//https://www.dropbox.com/request/6Sbj97i1JKv7LXelSrLF
+    //https://www.dropbox.com/request/6Sbj97i1JKv7LXelSrLF
 
-	public static final String OVERRIDEMSG = "File name with this name already exists.Do you want to replace this file?";
-	final static public String DROPBOX_APP_KEY = "z3w39hvuzdzx7ph";
-	final static public String DROPBOX_APP_SECRET = "it6hzxqo25gd8sz";
-	public static boolean mLoggedIn = false;
+    public static final String OVERRIDEMSG = "File name with this name already exists.Do you want to replace this file?";
+    final static public String DROPBOX_APP_KEY = "81faqv88l3hzp9g";
+    final static public String DROPBOX_APP_SECRET = "5653persr7vczz0";
+    public static boolean mLoggedIn = false;
 
-	final static public AccessType ACCESS_TYPE = AccessType.DROPBOX;
+    final static public AccessType ACCESS_TYPE = AccessType.DROPBOX;
 
-	final static public String ACCOUNT_PREFS_NAME = "prefs";
-	final static public String ACCESS_KEY_NAME = "ACCESS_KEY";
-	final static public String ACCESS_SECRET_NAME = "ACCESS_SECRET";
+    final static public String ACCOUNT_PREFS_NAME = "prefs";
+    final static public String ACCESS_KEY_NAME = "ACCESS_KEY";
+    final static public String ACCESS_SECRET_NAME = "ACCESS_SECRET";
 //	public static final int BOOKMARKS = 4;
 //	public static final int OPENFILE = 5;
 

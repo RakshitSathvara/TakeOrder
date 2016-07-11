@@ -111,6 +111,8 @@ public class SummaryOfOrderFragment extends Fragment implements View.OnClickList
         startDate = (EditText) rootView.findViewById(R.id.et_startDate);
         endDate = (EditText) rootView.findViewById(R.id.et_endDate);
 
+        btnDropboxSummary.setOnClickListener(this);
+
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

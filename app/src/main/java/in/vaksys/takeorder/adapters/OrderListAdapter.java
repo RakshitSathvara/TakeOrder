@@ -98,7 +98,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.quantity.setText(addOrder.getQuality());
         holder.price.setText(addOrder.getPrice());
         holder.description.setText(addOrder.getDescription());
-
+        holder.checkBox.setId(position);
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,8 +107,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 dialog.setContentView(R.layout.add_contact_edit);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                id = holder.orderIdHidden.getText().toString();
-                Log.e("iddddd", id);
+//                id = holder.orderIdHidden.getText().toString();
+//                Log.e("iddddd", id);
 
                 final Spinner spinner = (Spinner) dialog.findViewById(R.id.sp_cus_name_edit);
                 barcode = (EditText) dialog.findViewById(R.id.et_name_addOrder_edit);
@@ -205,46 +205,73 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             }
         });
 
-        id = holder.orderIdHidden.getText().toString();
-        Log.e("iddddd", id);
+        holder.checkBox.setTag(addOrderRealmResults.get(position));
+
+        holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                int pp = holder.checkBox.getId();
+//                holder.checkBox.setTag(position);
+                holder.checkBox.setSelected(b);
                 if (b) {
-
+                    id = holder.orderIdHidden.getText().toString();
+                    Log.e("iddddd", id);
                     mRealm.beginTransaction();
 
                     AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
 
+                    addOrder.setFlag(true);
+                    mRealm.commitTransaction();
                     holder.linearOrder.setBackgroundResource(R.color.colorBackground);
-                    holder.linearOrder.setEnabled(false);
+                    // holder.linearOrder.setEnabled(false);
                     holder.edit.setEnabled(false);
                     holder.delete.setEnabled(false);
 
-                    addOrder.setFlag(true);
-
-                    mRealm.commitTransaction();
-                    mRealm.close();
                     //AddOrder addOrder1 = mRealm.where(AddOrder.class).equalTo("orderId",pos).findFirst();
 
                 } else {
 
+                    id = holder.orderIdHidden.getText().toString();
+                    Log.e("iddddd", id);
+
                     mRealm.beginTransaction();
 
                     AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+                    addOrder.setFlag(false);
 
+                    mRealm.commitTransaction();
                     holder.linearOrder.setBackgroundColor(Color.WHITE);
                     holder.edit.setEnabled(true);
                     holder.delete.setEnabled(true);
                     //holder.linearOrder.setClickable(false);
-                    addOrder.setFlag(false);
 
-                    mRealm.commitTransaction();
-                    mRealm.close();
                 }
 
             }
         });
+
+        RealmResults<AddOrder> temp = mRealm.where(AddOrder.class).equalTo("orderId", id).findAll();
+        RealmResults<AddOrder> selectedOrder = temp.where().equalTo("flag", true).findAll();
+
+        Log.e("lenths", String.valueOf(selectedOrder.size()));
+
+
+        if (selectedOrder.size() > 0) {
+
+
+            holder.checkBox.setChecked(true);
+            holder.linearOrder.setBackgroundResource(R.color.colorBackground);
+            // holder.linearOrder.setEnabled(false);
+            holder.edit.setEnabled(false);
+            holder.delete.setEnabled(false);
+            selectedOrder.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
+                @Override
+                public void onChange(RealmResults<AddOrder> element) {
+                    notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     private void saveData() {

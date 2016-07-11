@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     RecyclerView recyclerview;
     @Bind(R.id.btn_generate_csvtodropbox)
     Button btn_generate_csvtodropbox;
+    @Bind(R.id.logout)
+    Button logout;
 
     private ContactListAdapter contactListAdapter;
     private Realm mRealm;
@@ -100,6 +103,14 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
             @Override
             public void onChange(RealmResults<AddContact> element) {
                 contactListAdapter.notifyDataSetChanged();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Click Logout", Toast.LENGTH_SHORT).show();
+                logOut();
             }
         });
 
@@ -225,10 +236,12 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
 
 
     private void logOut() {
+        Log.e("In Logout", "logOut: ");
         mApi.getSession().unlink();
 
         clearKeys();
     }
+
     private void clearKeys() {
         SharedPreferences prefs = getActivity().getSharedPreferences(
                 Constants.ACCOUNT_PREFS_NAME, 0);
@@ -265,6 +278,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         edit.putString(Constants.ACCESS_SECRET_NAME, secret);
         edit.commit();
     }
+
     private void showToast(String msg) {
         Toast error = Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG);
         error.show();
@@ -280,5 +294,11 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         }
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
 }

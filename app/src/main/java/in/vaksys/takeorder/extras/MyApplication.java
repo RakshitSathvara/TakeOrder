@@ -18,7 +18,7 @@ public class MyApplication extends Application {
         mInstance = this;
 
         RealmConfiguration configuration = new RealmConfiguration.Builder(this)
-                .name("takeordernew10.realm")
+                .name("takeordernew11.realm")
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(1)
                 .build();

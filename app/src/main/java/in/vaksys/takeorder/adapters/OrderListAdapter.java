@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.dbPojo.AddContact;
@@ -90,6 +91,109 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         addOrder = addOrderRealmResults.get(position);
+
+        final int pos = position;
+
+        holder.checkBox.setChecked(addOrder.isFlag());
+        holder.checkBox.setTag(addOrderRealmResults.get(position));
+
+//        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                CheckBox checkBox = (CheckBox) view;
+//
+//                mRealm = Realm.getDefaultInstance();
+//
+//                mRealm.beginTransaction();
+//                AddOrder student = (AddOrder) checkBox.getTag();
+//                AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+//                student.setFlag(checkBox.isChecked());
+//                addOrderRealmResults.get(pos).setFlag(checkBox.isChecked());
+//
+//                //id = holder.orderIdHidden.getText().toString();
+//                //Log.e("iddddd", id);
+//                //mRealm.beginTransaction();
+//
+//
+//                //addOrder.setFlag(true);
+//                //mRealm.commitTransaction();
+//                holder.linearOrder.setBackgroundResource(R.color.colorBackground);
+//                // holder.linearOrder.setEnabled(false);
+//                holder.edit.setEnabled(false);
+//                holder.delete.setEnabled(false);
+//
+//                Toast.makeText(
+//                        view.getContext(),
+//                        "Clicked on Checkbox: " + checkBox.getText() + " is "
+//                                + checkBox.isChecked(), Toast.LENGTH_LONG).show();
+//
+//                mRealm.commitTransaction();
+//            }
+//        });
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    CheckBox checkBox = (CheckBox) compoundButton;
+
+                    mRealm = Realm.getDefaultInstance();
+
+                    mRealm.beginTransaction();
+                    AddOrder student = (AddOrder) checkBox.getTag();
+                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+                    student.setFlag(checkBox.isChecked());
+                    addOrderRealmResults.get(pos).setFlag(checkBox.isChecked());
+
+                    //id = holder.orderIdHidden.getText().toString();
+                    //Log.e("iddddd", id);
+                    //mRealm.beginTransaction();
+
+
+                    //addOrder.setFlag(true);
+                    //mRealm.commitTransaction();
+                    holder.linearOrder.setBackgroundResource(R.color.colorBackground);
+                    holder.linearOrder.setEnabled(false);
+                    holder.edit.setEnabled(false);
+                    holder.delete.setEnabled(false);
+
+                    Toast.makeText(
+                            compoundButton.getContext(),
+                            "Clicked on Checkbox: " + checkBox.getText() + " is "
+                                    + checkBox.isChecked(), Toast.LENGTH_SHORT).show();
+
+                    mRealm.commitTransaction();
+                } else {
+                    CheckBox checkBox = (CheckBox) compoundButton;
+
+                    mRealm = Realm.getDefaultInstance();
+
+                    mRealm.beginTransaction();
+                    AddOrder student = (AddOrder) checkBox.getTag();
+                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+                    student.setFlag(false);
+                    addOrderRealmResults.get(pos).setFlag(checkBox.isChecked());
+
+                    //id = holder.orderIdHidden.getText().toString();
+                    //Log.e("iddddd", id);
+                    //mRealm.beginTransaction();
+
+
+                    //addOrder.setFlag(true);
+                    //mRealm.commitTransaction();
+                    holder.linearOrder.setBackgroundColor(Color.WHITE);
+                    holder.edit.setEnabled(true);
+                    holder.delete.setEnabled(true);
+
+                    Toast.makeText(
+                            compoundButton.getContext(),
+                            "Clicked on Checkbox: " + checkBox.getText() + " is "
+                                    + checkBox.isChecked(), Toast.LENGTH_SHORT).show();
+
+                    mRealm.commitTransaction();
+                }
+            }
+        });
 
         //  AddContact results = mRealm.where(AddContact.class).findFirst();
         holder.orderId.setText(String.valueOf(position + 1));
@@ -205,52 +309,52 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             }
         });
 
-        holder.checkBox.setTag(addOrderRealmResults.get(position));
-
-        holder.checkBox.setOnCheckedChangeListener(null);
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                int pp = holder.checkBox.getId();
-//                holder.checkBox.setTag(position);
-                holder.checkBox.setSelected(b);
-                if (b) {
-                    id = holder.orderIdHidden.getText().toString();
-                    Log.e("iddddd", id);
-                    mRealm.beginTransaction();
-
-                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
-
-                    addOrder.setFlag(true);
-                    mRealm.commitTransaction();
-                    holder.linearOrder.setBackgroundResource(R.color.colorBackground);
-                    // holder.linearOrder.setEnabled(false);
-                    holder.edit.setEnabled(false);
-                    holder.delete.setEnabled(false);
-
-                    //AddOrder addOrder1 = mRealm.where(AddOrder.class).equalTo("orderId",pos).findFirst();
-
-                } else {
-
-                    id = holder.orderIdHidden.getText().toString();
-                    Log.e("iddddd", id);
-
-                    mRealm.beginTransaction();
-
-                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
-                    addOrder.setFlag(false);
-
-                    mRealm.commitTransaction();
-                    holder.linearOrder.setBackgroundColor(Color.WHITE);
-                    holder.edit.setEnabled(true);
-                    holder.delete.setEnabled(true);
-                    //holder.linearOrder.setClickable(false);
-
-                }
-
-            }
-        });
-
+//        holder.checkBox.setTag(addOrderRealmResults.get(position));
+//
+//        holder.checkBox.setOnCheckedChangeListener(null);
+//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                int pp = holder.checkBox.getId();
+////                holder.checkBox.setTag(position);
+//                holder.checkBox.setSelected(b);
+//                if (b) {
+//                    id = holder.orderIdHidden.getText().toString();
+//                    Log.e("iddddd", id);
+//                    mRealm.beginTransaction();
+//
+//                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+//
+//                    addOrder.setFlag(true);
+//                    mRealm.commitTransaction();
+//                    holder.linearOrder.setBackgroundResource(R.color.colorBackground);
+//                    // holder.linearOrder.setEnabled(false);
+//                    holder.edit.setEnabled(false);
+//                    holder.delete.setEnabled(false);
+//
+//                    //AddOrder addOrder1 = mRealm.where(AddOrder.class).equalTo("orderId",pos).findFirst();
+//
+//                } else {
+//
+//                    id = holder.orderIdHidden.getText().toString();
+//                    Log.e("iddddd", id);
+//
+//                    mRealm.beginTransaction();
+//
+//                    AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+//                    addOrder.setFlag(false);
+//
+//                    mRealm.commitTransaction();
+//                    holder.linearOrder.setBackgroundColor(Color.WHITE);
+//                    holder.edit.setEnabled(true);
+//                    holder.delete.setEnabled(true);
+//                    //holder.linearOrder.setClickable(false);
+//
+//                }
+//
+//            }
+//        });
+//
         RealmResults<AddOrder> temp = mRealm.where(AddOrder.class).equalTo("orderId", id).findAll();
         RealmResults<AddOrder> selectedOrder = temp.where().equalTo("flag", true).findAll();
 

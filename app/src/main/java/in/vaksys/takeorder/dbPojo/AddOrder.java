@@ -3,6 +3,7 @@ package in.vaksys.takeorder.dbPojo;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by dell980 on 6/29/2016.
@@ -17,6 +18,12 @@ public class AddOrder extends RealmObject {
     private Date startDate;
     private String buyerName;
     private boolean flag = false;
+    //private RealmResults<AddOrder> addOrderList;
+
+//    public AddOrder(RealmResults<AddOrder> addOrderList, boolean flag) {
+//        this.addOrderList = addOrderList;
+//        this.flag = flag;
+//    }
 
     public boolean isFlag() {
         return flag;

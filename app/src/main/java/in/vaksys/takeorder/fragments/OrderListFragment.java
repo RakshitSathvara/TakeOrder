@@ -98,7 +98,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerview.setLayoutManager(manager);
 
-        RealmResults<AddContact> addOrders = mRealm.where(AddContact.class).findAll();
+        final RealmResults<AddContact> addOrders = mRealm.where(AddContact.class).findAll();
 
         final SpinnerTextAdapter sp = new SpinnerTextAdapter(getActivity(), addOrders);
         spCustomer.setAdapter(sp);
@@ -111,6 +111,8 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
                 String buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
                 Log.e("RESULT", "onItemSelected: " + buyerIdName);
                 addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", buyerIdName).findAll();
+//                AddOrder addOrder = new AddOrder(addOrderList, false);
+//                addOrderList.add(addOrder);
                 Log.e("RESULT", "onItemSelected: " + addOrderList.size());
                 orderListAdapter = new OrderListAdapter(getActivity(), addOrderList);
                 recyclerview.setHasFixedSize(true);
@@ -141,10 +143,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
 
         if (addOrderList.size() > 0) {
 
-
             try {
-
-
                 File mediaStorageDir = new File(
                         Environment
                                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),

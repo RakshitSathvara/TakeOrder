@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.dbPojo.AddContact;
+import in.vaksys.takeorder.extras.MyApplication;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -35,6 +36,7 @@ public class AddContactFragment extends Fragment {
     Button btnSaveAddContact;
 
     private Realm mRealm;
+    private MyApplication myApplication;
 
     public static AddContactFragment newInstance(int index) {
         AddContactFragment fragment = new AddContactFragment();
@@ -50,12 +52,15 @@ public class AddContactFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_add_contact, container, false);
         ButterKnife.bind(this, rootView);
 
+        myApplication = MyApplication.getInstance();
+
         mRealm = Realm.getDefaultInstance();
 
         btnSaveAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submitForm();
+                myApplication.hideKeyboard(getActivity());
             }
         });
 

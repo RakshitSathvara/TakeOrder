@@ -42,8 +42,8 @@
                 android:background="@drawable/rectangle_border"
                 android:padding="8dp">
 
-                <Spinner
-                    android:id="@+id/sp_cus_name_edit"
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_cus_name_checkList_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -69,7 +69,7 @@
 
 
             <EditText
-                android:id="@+id/et_name_addOrder_edit"
+                android:id="@+id/et_name_addOrder_checkList_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -100,7 +100,7 @@
 
 
             <EditText
-                android:id="@+id/et_quantity_addOrder_edit"
+                android:id="@+id/et_quantity_addOrder_checkList_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -132,7 +132,7 @@
 
 
             <EditText
-                android:id="@+id/et_price_addOrder_edit"
+                android:id="@+id/et_price_addOrder_checkList_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -164,7 +164,7 @@
 
 
             <EditText
-                android:id="@+id/et_description_addOrder_edit"
+                android:id="@+id/et_description_addOrder_checkList_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -180,21 +180,21 @@
 
         <FrameLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/btn_save_addOrder_edit"
+                android:id="@+id/btn_save_addOrder_checkList_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_shape"
                 android:padding="10dp"
                 android:text="save"
                 android:textAllCaps="true"
                 android:textColor="#FFFFFF" />
 
-            <Button
+            <!--<Button
                 android:id="@+id/btn_finish_addOrder_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                 android:padding="10dp"
                 android:text="finish"
                 android:textAllCaps="true"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF" />-->
 
 
         </FrameLayout>

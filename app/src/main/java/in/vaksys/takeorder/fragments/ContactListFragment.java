@@ -50,8 +50,8 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     RecyclerView recyclerview;
     @Bind(R.id.btn_generate_csvtodropbox)
     Button btn_generate_csvtodropbox;
-    @Bind(R.id.logout)
-    Button logout;
+//    @Bind(R.id.logout)
+//    Button logout;
 
     private ContactListAdapter contactListAdapter;
     private Realm mRealm;
@@ -106,13 +106,13 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Click Logout", Toast.LENGTH_SHORT).show();
-                logOut();
-            }
-        });
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "Click Logout", Toast.LENGTH_SHORT).show();
+//                logOut();
+//            }
+//        });
 
         return rootView;
     }

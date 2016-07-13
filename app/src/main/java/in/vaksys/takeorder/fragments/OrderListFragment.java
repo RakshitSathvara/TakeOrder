@@ -73,6 +73,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
     private DropboxAPI<AndroidAuthSession> mApi;
     private final String DIR = "/";
     private boolean mLoggedIn, onResume;
+    String buyerIdName = "";
 
     public static OrderListFragment newInstance(int index) {
         OrderListFragment fragment = new OrderListFragment();
@@ -108,7 +109,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
         spCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+               buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
                 Log.e("RESULT", "onItemSelected: " + buyerIdName);
                 addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", buyerIdName).findAll();
 //                AddOrder addOrder = new AddOrder(addOrderList, false);
@@ -141,6 +142,9 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
 
+
+        addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", buyerIdName).findAll();
+        System.out.println(addOrderList.size());
         if (addOrderList.size() > 0) {
 
             try {

@@ -43,6 +43,7 @@ import in.vaksys.takeorder.activities.UploadFile;
 import in.vaksys.takeorder.adapters.SummaryListAdapter;
 import in.vaksys.takeorder.dbPojo.AddOrder;
 import in.vaksys.takeorder.extras.Constants;
+import in.vaksys.takeorder.extras.MyApplication;
 import in.vaksys.takeorder.extras.Utils;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -79,6 +80,7 @@ public class SummaryOfOrderFragment extends Fragment implements View.OnClickList
     private DropboxAPI<AndroidAuthSession> mApi;
     private final String DIR = "/";
     private boolean mLoggedIn, onResume;
+    private MyApplication myApplication;
 
 
     public static SummaryOfOrderFragment newInstance(int index) {
@@ -95,6 +97,8 @@ public class SummaryOfOrderFragment extends Fragment implements View.OnClickList
         View rootView = inflater.inflate(R.layout.fagment_summary_of_order, container, false);
         ButterKnife.bind(this, rootView);
         mRealm = Realm.getDefaultInstance();
+
+        myApplication = MyApplication.getInstance();
 
         summaryRecycler = (RecyclerView) rootView.findViewById(R.id.summaryRecycler);
 
@@ -120,6 +124,7 @@ public class SummaryOfOrderFragment extends Fragment implements View.OnClickList
 //                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 //                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 selectdate(startDate);
+                myApplication.hideKeyboard(getActivity());
             }
         });
 
@@ -130,6 +135,7 @@ public class SummaryOfOrderFragment extends Fragment implements View.OnClickList
 //                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 //                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 selectdate(endDate);
+                myApplication.hideKeyboard(getActivity());
             }
         });
 

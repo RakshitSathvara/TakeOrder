@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="right"
-            android:text="No."
+            android:text="No"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textStyle="bold" />

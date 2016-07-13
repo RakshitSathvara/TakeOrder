@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.adapters.CheckListAdapter;
 import in.vaksys.takeorder.dbPojo.AddOrder;
+import in.vaksys.takeorder.dbPojo.Temp;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -27,7 +28,7 @@ public class CheckListFragment extends Fragment {
     @Bind(R.id.recyclerCheckList)
     RecyclerView recyclerCheckList;
     private Realm mRealm;
-    private RealmResults<AddOrder> addOrderRealmResults;
+    private RealmResults<Temp> tempRealmResults;
     private CheckListAdapter checkListAdapter;
 
     public static CheckListFragment newInstance(int index) {
@@ -48,18 +49,18 @@ public class CheckListFragment extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerCheckList.setLayoutManager(manager);
 
-        addOrderRealmResults = mRealm.where(AddOrder.class).equalTo("flag", true).findAll();
-        Log.e("CHECKLIS", "onCreateView: " + addOrderRealmResults.size());
+        tempRealmResults = mRealm.where(Temp.class).equalTo("flag", true).findAll();
+        Log.e("CHECKLIS", "onCreateView: " + tempRealmResults.size());
 
-        checkListAdapter = new CheckListAdapter(getActivity(), addOrderRealmResults);
+        checkListAdapter = new CheckListAdapter(getActivity(), tempRealmResults);
         recyclerCheckList.setHasFixedSize(true);
         recyclerCheckList.setItemAnimator(new DefaultItemAnimator());
         recyclerCheckList.setNestedScrollingEnabled(false);
         recyclerCheckList.setAdapter(checkListAdapter);
 
-        addOrderRealmResults.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
+        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Temp>>() {
             @Override
-            public void onChange(RealmResults<AddOrder> element) {
+            public void onChange(RealmResults<Temp> element) {
                 checkListAdapter.notifyDataSetChanged();
             }
         });

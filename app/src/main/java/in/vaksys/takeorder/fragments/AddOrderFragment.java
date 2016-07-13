@@ -28,6 +28,7 @@ import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.adapters.SpinnerTextAdapter;
 import in.vaksys.takeorder.dbPojo.AddContact;
 import in.vaksys.takeorder.dbPojo.AddOrder;
+import in.vaksys.takeorder.extras.MyApplication;
 import in.vaksys.takeorder.model.Message;
 import in.vaksys.takeorder.model.MessageSec;
 import io.realm.Realm;
@@ -56,10 +57,11 @@ public class AddOrderFragment extends Fragment {
     private Realm mRealm;
     private RealmResults<AddContact> results;
     private String sp;
-    private String buyerIdName;
+    private String buyerIdName = "";
 
     private SimpleDateFormat sdf, dateFormatter;
     Date d = null;
+    private MyApplication myApplication;
 
     public static AddOrderFragment newInstance(int index) {
         AddOrderFragment fragment = new AddOrderFragment();
@@ -75,6 +77,8 @@ public class AddOrderFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_add_order, container, false);
         ButterKnife.bind(this, rootView);
 
+        myApplication = MyApplication.getInstance();
+
         mRealm = Realm.getDefaultInstance();
 
         results = mRealm.where(AddContact.class).findAll();
@@ -87,8 +91,8 @@ public class AddOrderFragment extends Fragment {
         btnSaveAddOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 submitForm();
+                myApplication.hideKeyboard(getActivity());
             }
         });
 
@@ -113,7 +117,7 @@ public class AddOrderFragment extends Fragment {
 //                buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
 
                 submitForm();
-
+                myApplication.hideKeyboard(getActivity());
                 Log.e("FINISH", "onClick: " + sp + buyerIdName);
                 EventBus.getDefault().post(new Message(buyerIdName));
 
@@ -206,7 +210,38 @@ public class AddOrderFragment extends Fragment {
         }
     }
 
+    private boolean validateSpinner() {
+
+
+        if (buyerIdName.equalsIgnoreCase("")) {
+            Toast.makeText(getActivity(), "Please Add Contact First.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+
+
+    }
+
     private void submitForm() {
+
+        spCusName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        if (!validateSpinner()) {
+            return;
+        }
         if (!validateBarcodeName()) {
             return;
         }
@@ -220,7 +255,7 @@ public class AddOrderFragment extends Fragment {
 
         }
 
-        sp = spCusName.getSelectedItem().toString();
+//        sp = spCusName.getSelectedItem().toString();
 
         String name = etNameAddOrder.getText().toString();
         String quantity = etQuantityAddOrder.getText().toString();

@@ -58,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:gravity="center"
             android:lines="1"
             android:text="321"
@@ -96,13 +96,13 @@
             android:gravity="center"
             android:src="@drawable/ic_action_edit" />
 
-        <!-- <ImageView
-             android:id="@+id/delete_order"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:gravity="right"
-             android:src="@drawable/ic_action_delete" />-->
+        <ImageView
+            android:id="@+id/delete_order_checkList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:src="@drawable/ic_action_delete" />
 
     </LinearLayout>
 

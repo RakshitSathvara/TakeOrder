@@ -2,8 +2,10 @@ package in.vaksys.takeorder.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -65,7 +67,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
         tempOrder = tempRealmResults.get(position);
 
         id = tempOrder.getOrderId();
-        Log.e("iddddd", id);
+        Log.e("iddddd in restore", id);
 
         final int pos = position;
 
@@ -146,29 +148,49 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mRealm = Realm.getDefaultInstance();
 
-                mRealm.beginTransaction();
-                Temp temp = mRealm.where(Temp.class).equalTo("orderId", id).findFirst();
-                temp.setFlag(false);
-                mRealm.commitTransaction();
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+                alertDialogBuilder.setTitle("Sure want to Restore this Order ??")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int pos1) {
 
-                Temp aa = tempRealmResults.get(pos);
-                mRealm.beginTransaction();
-                AddOrder aaaa = mRealm.createObject(AddOrder.class);
-                aaaa.setOrderId(aa.getOrderId());
-                aaaa.setBuyerName(aa.getBuyerName());
-                aaaa.setBarcode(aa.getBarcode());
-                aaaa.setQuality(aa.getQuality());
-                aaaa.setPrice(aa.getPrice());
-                aaaa.setDescription(aa.getDescription());
-                aaaa.setStartDate(aa.getStartDate());
-                aaaa.setFlag(aa.isFlag());
+                                Log.e("Restore btn Click", "onClick: " + id + pos);
 
-                tempRealmResults.deleteFromRealm(pos);
-                mRealm.commitTransaction();
+                                mRealm = Realm.getDefaultInstance();
 
-                notifyDataSetChanged();
+                                mRealm.beginTransaction();
+                                Temp temp = mRealm.where(Temp.class).equalTo("orderId", id).findFirst();
+                                temp.setFlag(false);
+                                mRealm.commitTransaction();
+
+                                Temp aa = tempRealmResults.get(pos);
+                                mRealm.beginTransaction();
+                                AddOrder aaaa = mRealm.createObject(AddOrder.class);
+                                aaaa.setOrderId(aa.getOrderId());
+                                aaaa.setBuyerName(aa.getBuyerName());
+                                aaaa.setBarcode(aa.getBarcode());
+                                aaaa.setQuality(aa.getQuality());
+                                aaaa.setPrice(aa.getPrice());
+                                aaaa.setDescription(aa.getDescription());
+                                aaaa.setStartDate(aa.getStartDate());
+                                aaaa.setFlag(aa.isFlag());
+
+                                tempRealmResults.deleteFromRealm(pos);
+                                mRealm.commitTransaction();
+
+                                notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 

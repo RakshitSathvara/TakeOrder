@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.dbPojo.AddContact;
@@ -282,7 +281,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 AddOrder student = (AddOrder) checkBox.getTag();
                 AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
                 student.setFlag(true);
-                addOrderRealmResults.get(pos).setFlag(checkBox.isChecked());
+                //addOrderRealmResults.get(pos).setFlag(checkBox.isChecked());
                 mRealm.commitTransaction();
 
                 AddOrder aa = addOrderRealmResults.get(pos);
@@ -319,10 +318,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 //holder.edit.setEnabled(false);
                 //holder.delete.setEnabled(false);
 
-                Toast.makeText(
-                        view.getContext(),
-                        "Clicked on Checkbox: " + checkBox.getText() + " is "
-                                + checkBox.isChecked(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(
+//                        view.getContext(),
+//                        "Clicked on Checkbox: " + checkBox.getText() + " is "
+//                                + checkBox.isChecked(), Toast.LENGTH_SHORT).show();
 
             }
 

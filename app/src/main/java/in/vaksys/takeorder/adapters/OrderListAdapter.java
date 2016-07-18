@@ -284,22 +284,28 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 //addOrderRealmResults.get(pos).setFlag(checkBox.isChecked());
                 mRealm.commitTransaction();
 
-                AddOrder aa = addOrderRealmResults.get(pos);
-                mRealm.beginTransaction();
-                Temp aaaa = mRealm.createObject(Temp.class);
-                aaaa.setOrderId(aa.getOrderId());
-                aaaa.setBuyerName(aa.getBuyerName());
-                aaaa.setBarcode(aa.getBarcode());
-                aaaa.setQuality(aa.getQuality());
-                aaaa.setPrice(aa.getPrice());
-                aaaa.setDescription(aa.getDescription());
-                aaaa.setStartDate(aa.getStartDate());
-                aaaa.setFlag(aa.isFlag());
+//                AddOrder aa = addOrderRealmResults.get(pos);
+//                mRealm.beginTransaction();
+//                Temp aaaa = mRealm.createObject(Temp.class);
+//                aaaa.setOrderId(aa.getOrderId());
+//                aaaa.setBuyerName(aa.getBuyerName());
+//                aaaa.setBarcode(aa.getBarcode());
+//                aaaa.setQuality(aa.getQuality());
+//                aaaa.setPrice(aa.getPrice());
+//                aaaa.setDescription(aa.getDescription());
+//                aaaa.setStartDate(aa.getStartDate());
+//                aaaa.setFlag(aa.isFlag());
+//
+//                addOrderRealmResults.deleteFromRealm(pos);
+//                mRealm.commitTransaction();
 
-                addOrderRealmResults.deleteFromRealm(pos);
-                mRealm.commitTransaction();
-
-                notifyDataSetChanged();
+                addOrderRealmResults.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
+                    @Override
+                    public void onChange(RealmResults<AddOrder> element) {
+                        notifyDataSetChanged();
+                    }
+                });
+                //notifyDataSetChanged();
                 //id = holder.orderIdHidden.getText().toString();
                 //Log.e("iddddd", id);
                 //mRealm.beginTransaction();
@@ -329,7 +335,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
         final RealmResults<AddOrder> temp = mRealm.where(AddOrder.class).equalTo("orderId", id).findAll();
         RealmResults<AddOrder> selectedOrder = temp.where().equalTo("flag", false).findAll();
-        Log.e("lenths", String.valueOf(selectedOrder.size()));
+        Log.e("lenths in orderlist", String.valueOf(selectedOrder.size()));
         if (selectedOrder.size() > 0) {
 
 //            holder.linearOrder.setBackgroundResource(R.color.colorBackground);

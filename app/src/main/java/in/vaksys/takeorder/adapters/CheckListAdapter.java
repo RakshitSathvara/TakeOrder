@@ -21,7 +21,6 @@ import android.widget.TextView;
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.dbPojo.AddContact;
 import in.vaksys.takeorder.dbPojo.AddOrder;
-import in.vaksys.takeorder.dbPojo.Temp;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -32,10 +31,12 @@ import io.realm.RealmResults;
 public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCheckList> {
 
     private Context mContext;
-    private RealmResults<Temp> tempRealmResults = null;
+    //private RealmResults<Temp> tempRealmResults = null;
+    private RealmResults<AddOrder> tempRealmResults = null;
     private RealmResults<AddContact> results;
     private Realm mRealm;
-    private Temp tempOrder;
+    //private Temp tempOrder;
+    private AddOrder tempOrder;
     Realm realm;
     private String id;
     private Dialog dialog;
@@ -48,7 +49,13 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
     private String sp, barcode1, quantity1, price1, description1;
 
 
-    public CheckListAdapter(Context mContext, RealmResults<Temp> tempRealmResults) {
+//    public CheckListAdapter(Context mContext, RealmResults<Temp> tempRealmResults) {
+//        this.mContext = mContext;
+//        this.tempRealmResults = tempRealmResults;
+//        mRealm = Realm.getDefaultInstance();
+//    }
+
+    public CheckListAdapter(Context mContext, RealmResults<AddOrder> tempRealmResults) {
         this.mContext = mContext;
         this.tempRealmResults = tempRealmResults;
         mRealm = Realm.getDefaultInstance();
@@ -67,12 +74,12 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
         tempOrder = tempRealmResults.get(position);
 
         id = tempOrder.getOrderId();
-        Log.e("iddddd in restore", id);
+        Log.e("iddddd in after restore", id);
 
         final int pos = position;
 
         holder.orderId.setText(String.valueOf(position + 1));
-        //holder.orderIdHidden.setText(addOrder.getOrderId());
+        holder.orderidHidden.setText(tempOrder.getOrderId());
         holder.orderIdHidden.setText(tempOrder.getBuyerName());
         holder.barcodeName.setText(tempOrder.getBarcode());
         holder.quantity.setText(tempOrder.getQuality());
@@ -107,7 +114,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
 
                 Button btnSave = (Button) dialog.findViewById(R.id.btn_save_addOrder_checkList_edit);
 
-                Temp tempOrder = mRealm.where(Temp.class).equalTo("orderId", id).findFirst();
+                AddOrder tempOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
                 System.out.println("Buyer Name in CheckList" + tempOrder.getBuyerName());
                 System.out.println("barcode Name in CheckList" + tempOrder.getBarcode());
                 System.out.println("quantity Name in CheckList" + tempOrder.getQuality());
@@ -145,57 +152,133 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
             }
         });
 
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.e("ID on delete", "onClick: " + id);
+//
+//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+//                alertDialog.setTitle("Sure want to Restore this Order ??")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                                mRealm = Realm.getDefaultInstance();
+//                                mRealm.beginTransaction();
+//                                Log.e("iddddd in in restore", id);
+//                                AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
+//                                addOrder.setFlag(false);
+//                                mRealm.commitTransaction();
+//                                notifyDataSetChanged();
+//                            }
+//                        })
+//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//
+//                AlertDialog alertDialog1 = alertDialog.create();
+//                alertDialog1.show();
+//            }
+//        });
+
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Log.e("idddddd---->", holder.orderId.getText().toString());
+//            }
+//        });
+
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
-                alertDialogBuilder.setTitle("Sure want to Restore this Order ??")
+                Log.e("ID on delete", "onClick: " + holder.orderidHidden.getText().toString());
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                alertDialog.setTitle("Sure want to Restore this Order ??")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int pos1) {
-
-                                Log.e("Restore btn Click", "onClick: " + id + pos);
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
                                 mRealm = Realm.getDefaultInstance();
-
                                 mRealm.beginTransaction();
-                                Temp temp = mRealm.where(Temp.class).equalTo("orderId", id).findFirst();
-                                temp.setFlag(false);
+                                Log.e("iddddd in in restore", holder.orderId.getText().toString());
+                                AddOrder addOrder = mRealm.where(AddOrder.class).equalTo("orderId", holder.orderidHidden.getText().toString()).findFirst();
+                                addOrder.setFlag(false);
                                 mRealm.commitTransaction();
-
-                                Temp aa = tempRealmResults.get(pos);
-                                mRealm.beginTransaction();
-                                AddOrder aaaa = mRealm.createObject(AddOrder.class);
-                                aaaa.setOrderId(aa.getOrderId());
-                                aaaa.setBuyerName(aa.getBuyerName());
-                                aaaa.setBarcode(aa.getBarcode());
-                                aaaa.setQuality(aa.getQuality());
-                                aaaa.setPrice(aa.getPrice());
-                                aaaa.setDescription(aa.getDescription());
-                                aaaa.setStartDate(aa.getStartDate());
-                                aaaa.setFlag(aa.isFlag());
-
-                                tempRealmResults.deleteFromRealm(pos);
-                                mRealm.commitTransaction();
-
                                 notifyDataSetChanged();
-
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
                             }
                         });
 
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                AlertDialog alertDialog1 = alertDialog.create();
+                alertDialog1.show();
             }
         });
 
-        RealmResults<AddOrder> temp = mRealm.where(AddOrder.class).equalTo("orderId", id).findAll();
-        RealmResults<AddOrder> selectedOrder = temp.where().equalTo("flag", true).findAll();
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+//                alertDialogBuilder.setTitle("Sure want to Restore this Order ??")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int pos1) {
+//
+//                                Log.e("Restore btn Click", "onClick: " + id + pos);
+//
+//                                mRealm = Realm.getDefaultInstance();
+//
+//                                mRealm.beginTransaction();
+//                                Temp temp = mRealm.where(Temp.class).equalTo("orderId", id).findFirst();
+//                                temp.setFlag(false);
+//                                mRealm.commitTransaction();
+//
+//                                Temp aa = tempRealmResults.get(pos);
+//                                mRealm.beginTransaction();
+//                                AddOrder aaaa = mRealm.createObject(AddOrder.class);
+//                                aaaa.setOrderId(aa.getOrderId());
+//                                aaaa.setBuyerName(aa.getBuyerName());
+//                                aaaa.setBarcode(aa.getBarcode());
+//                                aaaa.setQuality(aa.getQuality());
+//                                aaaa.setPrice(aa.getPrice());
+//                                aaaa.setDescription(aa.getDescription());
+//                                aaaa.setStartDate(aa.getStartDate());
+//                                aaaa.setFlag(aa.isFlag());
+//
+//                                tempRealmResults.deleteFromRealm(pos);
+//                                mRealm.commitTransaction();
+//
+//                                notifyDataSetChanged();
+//
+//                            }
+//                        })
+//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//
+//                AlertDialog alertDialog = alertDialogBuilder.create();
+//                alertDialog.show();
+//            }
+//        });
+
+        //RealmResults<AddOrder> temp = mRealm.where(AddOrder.class).equalTo("orderId", id).findAll();
+        RealmResults<AddOrder> selectedOrder = mRealm.where(AddOrder.class).equalTo("flag", true).findAll();
         Log.e("lenths", String.valueOf(selectedOrder.size()));
         if (selectedOrder.size() > 0) {
 
@@ -219,7 +302,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
 
     public class MyCheckList extends RecyclerView.ViewHolder {
 
-        public TextView orderId, barcodeName, quantity, price, description, orderIdHidden;
+        public TextView orderId, barcodeName, quantity, price, description, orderIdHidden, orderidHidden;
         private ImageView edit, delete;
 
         public MyCheckList(View itemView) {
@@ -233,6 +316,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
             orderIdHidden = (TextView) itemView.findViewById(R.id.orderIdHidden_checkList);
             edit = (ImageView) itemView.findViewById(R.id.edit_order_checkList);
             delete = (ImageView) itemView.findViewById(R.id.delete_order_checkList);
+            orderidHidden = (TextView) itemView.findViewById(R.id.tv_orderidHidden_checkList);
         }
     }
 
@@ -248,7 +332,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
         mRealm = Realm.getDefaultInstance();
 
         mRealm.beginTransaction();
-        Temp user = mRealm.where(Temp.class).equalTo("orderId", id).findFirst();
+        AddOrder user = mRealm.where(AddOrder.class).equalTo("orderId", id).findFirst();
         user.setBuyerName(sp);
         user.setBarcode(barcode1);
         user.setQuality(quantity1);
@@ -257,9 +341,17 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.MyCh
 
         mRealm.commitTransaction();
 
-        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Temp>>() {
+//        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Temp>>() {
+//            @Override
+//            public void onChange(RealmResults<Temp> element) {
+//
+//                notifyDataSetChanged();
+//            }
+//        });
+
+        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
             @Override
-            public void onChange(RealmResults<Temp> element) {
+            public void onChange(RealmResults<AddOrder> element) {
 
                 notifyDataSetChanged();
             }

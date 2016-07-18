@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import in.vaksys.takeorder.R;
 import in.vaksys.takeorder.adapters.CheckListAdapter;
 import in.vaksys.takeorder.dbPojo.AddOrder;
-import in.vaksys.takeorder.dbPojo.Temp;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -28,7 +27,8 @@ public class CheckListFragment extends Fragment {
     @Bind(R.id.recyclerCheckList)
     RecyclerView recyclerCheckList;
     private Realm mRealm;
-    private RealmResults<Temp> tempRealmResults;
+    //private RealmResults<Temp> tempRealmResults;
+    private RealmResults<AddOrder> tempRealmResults;
     private CheckListAdapter checkListAdapter;
 
     public static CheckListFragment newInstance(int index) {
@@ -49,7 +49,8 @@ public class CheckListFragment extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerCheckList.setLayoutManager(manager);
 
-        tempRealmResults = mRealm.where(Temp.class).equalTo("flag", true).findAll();
+        //tempRealmResults = mRealm.where(Temp.class).equalTo("flag", true).findAll();
+        tempRealmResults = mRealm.where(AddOrder.class).equalTo("flag", true).findAll();
         Log.e("CHECKLIS", "onCreateView: " + tempRealmResults.size());
 
         checkListAdapter = new CheckListAdapter(getActivity(), tempRealmResults);
@@ -58,9 +59,16 @@ public class CheckListFragment extends Fragment {
         recyclerCheckList.setNestedScrollingEnabled(false);
         recyclerCheckList.setAdapter(checkListAdapter);
 
-        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Temp>>() {
+//        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Temp>>() {
+//            @Override
+//            public void onChange(RealmResults<Temp> element) {
+//                checkListAdapter.notifyDataSetChanged();
+//            }
+//        });
+
+        tempRealmResults.addChangeListener(new RealmChangeListener<RealmResults<AddOrder>>() {
             @Override
-            public void onChange(RealmResults<Temp> element) {
+            public void onChange(RealmResults<AddOrder> element) {
                 checkListAdapter.notifyDataSetChanged();
             }
         });

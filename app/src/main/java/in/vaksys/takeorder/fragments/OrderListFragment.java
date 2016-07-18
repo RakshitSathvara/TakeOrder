@@ -111,7 +111,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener 
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                buyerIdName = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
                 Log.e("RESULT", "onItemSelected: " + buyerIdName);
-                addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", buyerIdName).findAll();
+                addOrderList = mRealm.where(AddOrder.class).equalTo("buyerName", buyerIdName).equalTo("flag",false).findAll();
 //                AddOrder addOrder = new AddOrder(addOrderList, false);
 //                addOrderList.add(addOrder);
                 Log.e("RESULT", "onItemSelected: " + addOrderList.size());
